@@ -66,8 +66,8 @@ class WhatsAppMessenger:
         logging.info("Validating phone numbers.")
         for phone in phone_numbers:
             if not phone.startswith('+') or len(phone) < 10:
-                logging.error(f"Invalid phone number: {phone}")
-                raise InvalidPhoneNumberError(f"Invalid phone number: {phone}")
+                logging.error("Invalid phone number encountered.")
+                raise InvalidPhoneNumberError("Invalid phone number.")
         logging.info("Phone numbers validated successfully.")
 
     def _send_message(self, phone_number, message):
