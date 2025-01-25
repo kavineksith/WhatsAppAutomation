@@ -111,7 +111,7 @@ class WhatsAppMessenger:
     def _send_message(self, phone_number, message):
         """Send a text message using Selenium."""
         try:
-            logging.info(f"Sending message to {phone_number}.")
+            logging.info(f"Sending message to {self._mask_phone_number(phone_number)}.")
             # Find the chat input box
             search_box = self.driver.find_element(By.XPATH, "//div[@title='Search or start new chat']")
             search_box.click()
@@ -124,10 +124,14 @@ class WhatsAppMessenger:
             message_box = self.driver.find_element(By.XPATH, "//div[@title='Type a message']")
             message_box.send_keys(message)
             message_box.send_keys(Keys.RETURN)
-            logging.info(f"Message sent to {phone_number}")
+            logging.info(f"Message sent to {self._mask_phone_number(phone_number)}")
         except Exception as e:
             logging.error(f"Error sending message: {str(e)}")
-            raise MessageSendError(f"Failed to send message to {phone_number}")
+            raise MessageSendError(f"Failed to send message to {self._mask_phone_number(phone_number)}")
+
+    def _mask_phone_number(self, phone_number):
+        """Mask the phone number to hide sensitive information."""
+        return phone_number[:3] + "****" + phone_number[-2:]
 
     def _send_bulk_messages(self, message_collection):
         """Send bulk messages to all contacts."""
