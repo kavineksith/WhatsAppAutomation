@@ -66,14 +66,15 @@ class WhatsAppMessenger:
         logging.info("Validating phone numbers.")
         for phone in phone_numbers:
             if not phone.startswith('+') or len(phone) < 10:
-                logging.error(f"Invalid phone number: {phone}")
-                raise InvalidPhoneNumberError(f"Invalid phone number: {phone}")
+                logging.error("Invalid phone number encountered.")
+                raise InvalidPhoneNumberError("Invalid phone number.")
         logging.info("Phone numbers validated successfully.")
 
     def _send_message(self, phone_number, message):
         """Send message using pywhatkit."""
         try:
-            logging.info(f"Preparing to send message to {phone_number}")
+            masked_phone_number = phone_number[:3] + "****" + phone_number[-3:]
+            logging.info(f"Preparing to send message to {masked_phone_number}")
             if isinstance(message, str):
                 kit.sendwhatmsg(phone_number, message, datetime.now().hour, datetime.now().minute + 2)
             elif isinstance(message, tuple) and len(message) == 2:  # Image and message
@@ -82,9 +83,9 @@ class WhatsAppMessenger:
                 kit.sendwhats_image(phone_number, image_path, text)
             else:
                 raise MessageSendError("Invalid message format.")
-            logging.info(f"Message sent to {phone_number}")
+            logging.info(f"Message sent to {masked_phone_number}")
         except Exception as e:
-            logging.error(f"Error sending message: {str(e)}")
+            logging.error(f"Error sending message to {masked_phone_number}: {str(e)}")
             raise MessageSendError(f"Failed to send message to {phone_number}")
 
     def _send_bulk_messages(self, message_collection):
