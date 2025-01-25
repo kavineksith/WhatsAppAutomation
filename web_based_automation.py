@@ -15,15 +15,18 @@ from time import sleep
 # Custom Exceptions
 class InvalidPhoneNumberError(Exception):
     """Raised when the phone number is invalid."""
-    pass
+    self.message = message
+    super().__init__(self.message)
 
 class FileNotFoundError(Exception):
     """Raised when a file is not found."""
-    pass
+    self.message = message
+    super().__init__(self.message)
 
 class MessageSendError(Exception):
     """Raised when a message fails to send."""
-    pass
+    self.message = message
+    super().__init__(self.message)
 
 # Configure logging
 logging.basicConfig(
