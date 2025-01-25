@@ -84,7 +84,7 @@ class WhatsAppMessenger:
                 raise MessageSendError("Invalid message format.")
             logging.info(f"Message sent to {phone_number}")
         except Exception as e:
-            logging.error(f"Error sending message to {phone_number}: {str(e)}")
+            logging.error(f"Error sending message: {str(e)}")
             raise MessageSendError(f"Failed to send message to {phone_number}")
 
     def _send_bulk_messages(self, message_collection):
