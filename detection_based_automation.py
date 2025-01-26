@@ -8,18 +8,21 @@ from time import sleep
 # Custom Exceptions
 class InvalidPhoneNumberError(Exception):
     """Raised when the phone number is invalid."""
-    self.message = message
-    super().__init__(self.message)
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
 class FileNotFoundError(Exception):
     """Raised when a file is not found."""
-    self.message = message
-    super().__init__(self.message)
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
 class MessageSendError(Exception):
     """Raised when a message fails to send."""
-    self.message = message
-    super().__init__(self.message)
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
 # Setup Logging
 log_filename = "whatsapp_messaging.log"
